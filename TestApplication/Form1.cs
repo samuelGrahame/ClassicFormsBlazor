@@ -20,6 +20,7 @@ namespace TestApplication
         private void button2_Click(object sender, EventArgs e)
         {
             textBox1.Text = "Hello World";
+            // need to invoke change...
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
