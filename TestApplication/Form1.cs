@@ -21,5 +21,10 @@ namespace TestApplication
         {
             textBox1.Text = "Hello World";
         }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            textBox2.Text = textBox1.Text;
+        }
     }
 }
