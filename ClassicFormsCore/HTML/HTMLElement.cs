@@ -33,8 +33,8 @@ namespace ClassicFormsCore.HTML
         public Action<MouseEvent> onmousedown
         {
             set {
-                string hash = value.GetHashCode().ToString();
-                HTMLStatic.normalMouseEvent.Add(value.GetHashCode().ToString(), value);
+                string hash = Guid.NewGuid().ToString();
+                HTMLStatic.normalMouseEvent.Add(hash, value);
                 RegisteredFunction.Invoke<object>("onmousedown", uid, hash);
             }                
         }
@@ -43,8 +43,8 @@ namespace ClassicFormsCore.HTML
         {
             set
             {
-                string hash = value.GetHashCode().ToString();
-                HTMLStatic.normalEvent.Add(value.GetHashCode().ToString(), value);
+                string hash = Guid.NewGuid().ToString();
+                HTMLStatic.normalEvent.Add(hash, value);
                 RegisteredFunction.Invoke<object>("onchange", uid, hash);
             }
         }
@@ -52,8 +52,8 @@ namespace ClassicFormsCore.HTML
         {
             set
             {
-                string hash = value.GetHashCode().ToString();
-                HTMLStatic.normalEvent.Add(value.GetHashCode().ToString(), value);
+                string hash = Guid.NewGuid().ToString();
+                HTMLStatic.normalEvent.Add(hash, value);
                 RegisteredFunction.Invoke<object>("onpaste", uid, hash);
             }
         }
@@ -62,8 +62,8 @@ namespace ClassicFormsCore.HTML
         {
             set
             {
-                string hash = value.GetHashCode().ToString();
-                HTMLStatic.normalEvent.Add(value.GetHashCode().ToString(), value);
+                string hash = Guid.NewGuid().ToString();
+                HTMLStatic.normalEvent.Add(hash, value);
                 RegisteredFunction.Invoke<object>("onkeydown", uid, hash);
             }
         }
@@ -72,8 +72,8 @@ namespace ClassicFormsCore.HTML
         {
             set
             {
-                string hash = value.GetHashCode().ToString();
-                HTMLStatic.normalEvent.Add(value.GetHashCode().ToString(), value);
+                string hash = Guid.NewGuid().ToString();
+                HTMLStatic.normalEvent.Add(hash, value);
                 RegisteredFunction.Invoke<object>("onkeyup", uid, hash);
             }
         }
@@ -82,8 +82,8 @@ namespace ClassicFormsCore.HTML
         {
             set
             {
-                string hash = value.GetHashCode().ToString();
-                HTMLStatic.normalEvent.Add(value.GetHashCode().ToString(), value);
+                string hash = Guid.NewGuid().ToString();
+                HTMLStatic.normalEvent.Add(hash, value);
                 RegisteredFunction.Invoke<object>("onclick", uid, hash);
             }
         }
@@ -91,8 +91,8 @@ namespace ClassicFormsCore.HTML
         {
             set
             {
-                string hash = value.GetHashCode().ToString();
-                HTMLStatic.normalEvent.Add(value.GetHashCode().ToString(), value);
+                string hash = Guid.NewGuid().ToString();
+                HTMLStatic.normalEvent.Add(hash, value);
                 RegisteredFunction.Invoke<object>("onblur", uid, hash);
             }
         }
@@ -100,8 +100,8 @@ namespace ClassicFormsCore.HTML
         {
             set
             {
-                string hash = value.GetHashCode().ToString();
-                HTMLStatic.normalMouseEvent.Add(value.GetHashCode().ToString(), value);
+                string hash = Guid.NewGuid().ToString();
+                HTMLStatic.normalMouseEvent.Add(hash, value);
                 RegisteredFunction.Invoke<object>("onmouseenter", uid, hash);
             }
         }
@@ -109,8 +109,8 @@ namespace ClassicFormsCore.HTML
         {
             set
             {
-                string hash = value.GetHashCode().ToString();
-                HTMLStatic.normalMouseEvent.Add(value.GetHashCode().ToString(), value);
+                string hash = Guid.NewGuid().ToString();
+                HTMLStatic.normalMouseEvent.Add(hash, value);
                 RegisteredFunction.Invoke<object>("onmouseleave", uid, hash);
             }
         }
@@ -118,8 +118,8 @@ namespace ClassicFormsCore.HTML
         {
             set
             {
-                string hash = value.GetHashCode().ToString();
-                HTMLStatic.normalMouseEvent.Add(value.GetHashCode().ToString(), value);
+                string hash = Guid.NewGuid().ToString();
+                HTMLStatic.normalMouseEvent.Add(hash, value);
                 RegisteredFunction.Invoke<object>("onmousemove", uid, hash);
             }
         }

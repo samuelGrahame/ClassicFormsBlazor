@@ -21,8 +21,8 @@ namespace ClassicFormsCore.HTML
         {
             set
             {
-                string hash = value.GetHashCode().ToString();
-                HTMLStatic.normalMouseEvent.Add(value.GetHashCode().ToString(), value);
+                string hash = Guid.NewGuid().ToString();
+                HTMLStatic.normalMouseEvent.Add(hash, value);
                 RegisteredFunction.Invoke<object>("onmousemove", uid, hash);
             }
         }
@@ -31,8 +31,8 @@ namespace ClassicFormsCore.HTML
         {
             set
             {
-                string hash = value.GetHashCode().ToString();
-                HTMLStatic.normalMouseEvent.Add(value.GetHashCode().ToString(), value);
+                string hash = Guid.NewGuid().ToString();
+                HTMLStatic.normalMouseEvent.Add(hash, value);
                 RegisteredFunction.Invoke<object>("onmouseup", uid, hash);
             }
         }
