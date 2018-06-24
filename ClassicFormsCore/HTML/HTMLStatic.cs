@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Blazor.Browser.Interop;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -44,11 +46,41 @@ namespace ClassicFormsCore.HTML
             }
         }
 
-        public static void InvokeMouseEvent(string uid)
+        public static void InvokeMouseEvent(string uid, string ev)
         {
             try
             {
-                normalMouseEvent[uid](null);
+                //Console.WriteLine(ev);
+                MouseEvent mev = null;
+                try
+                {
+                    JObject obj = (JObject)JsonConvert.DeserializeObject(ev);
+
+                   // Console.WriteLine(obj.GetType());
+                  //  Console.WriteLine(JsonConvert.SerializeObject(obj));
+
+                    mev = new MouseEvent()
+                    {
+                        clientX = (double)obj["clientX"]
+                      //  }
+                    };
+
+                //clientY = obj["clientY"].Value<double>(),
+                //        x = obj["x"].Value<double>(),
+                //        y = obj["y"].Value<double>(),
+                //        layerX = obj["layerX"].Value<double>(),
+                //        layerY = obj["layerY"].Value<double>(),
+                //        button = obj["button"].Value<double>(),
+                //        currentTarget = new HTMLElement()
+                //        {
+                //            uid = obj["currentTarget"].Value<string>()
+
+                    Console.WriteLine(JsonConvert.SerializeObject(mev));
+                }
+                catch (Exception)
+                {
+                }
+                normalMouseEvent[uid](mev);
             }
             catch (Exception)
             {
