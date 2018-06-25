@@ -50,18 +50,31 @@
                 typeName,
                 methodName
             );
-
+            var uuiToDelete = null;
             if(ev.currentTarget.gui == null) {
                 var uui = createGUID();
                 guidArray[uui] = ev.currentTarget;
                 ev.currentTarget.gui = uui;
+
+                uuiToDelete = uui;
             }
 
-            Blazor.platform.callMethod(methodTypeInfo, null, [Blazor.platform.toDotNetString(uid), Blazor.platform.toDotNetString(JSON.stringify(
-                {
-                    x: ev.x, y: ev.y, clientX: ev.clientX, clientY: ev.clientX, layerX: ev.layerX, layerY: ev.layerY, currentTarget: ev.currentTarget.gui,
-                    button: ev.button
-                }))]);
+            var eventuid = createGUID();
+            guidArray[eventuid] = ev;
+
+            var data = ev.x + '\n' + ev.y + '\n' + ev.clientX + '\n' + ev.clientY + '\n' + ev.layerX + '\n' + ev.layerY + '\n' + ev.currentTarget.gui + '\n' + ev.button + '\n' + eventuid;
+            //JSON.stringify(
+            //    {
+            //        x: ev.x, y: ev.y, clientX: ev.clientX, clientY: ev.clientY, layerX: ev.layerX, layerY: ev.layerY, currentTarget: ev.currentTarget.gui,
+            //        button: ev.button
+            //    })
+
+            Blazor.platform.callMethod(methodTypeInfo, null, [Blazor.platform.toDotNetString(uid), Blazor.platform.toDotNetString(data)]);
+
+            //delete guidArray[eventuid];
+            //if (uuiToDelete != null) {
+            //    delete guidArray[uuiToDelete];
+            //}
         }
 
         var documentGUI = createGUID();

@@ -23,5 +23,11 @@ namespace System.Windows.Forms
         {
 
         }
+
+        protected override void OnMouseUp(MouseEventArgs e)
+        {
+            Console.WriteLine("3");
+            base.OnMouseUp(e);
+        }
     }
 }

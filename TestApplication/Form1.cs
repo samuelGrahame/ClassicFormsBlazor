@@ -27,5 +27,15 @@ namespace TestApplication
         {
             textBox2.Text = textBox1.Text;
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.Location = new Point(this.Location.X - 1, this.Location.Y);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            this.Location = new Point(this.Location.X + 1, this.Location.Y);
+        }
     }
 }

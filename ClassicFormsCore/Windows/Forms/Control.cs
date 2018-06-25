@@ -443,7 +443,7 @@ namespace System.Windows.Forms
             {
                 if (ClickedOnControl != null)
                 {
-                    ev.stopPropagation();
+                    ev.stopImmediatePropagation();
 
                     ClickedOnControl.OnMouseMove(MouseEventArgs.CreateFromMouseEvent(ev, ClickedOnControl));
                 }
@@ -451,11 +451,22 @@ namespace System.Windows.Forms
 
             window.onmouseup = (ev) =>
             {
+                Console.WriteLine("On Mouse UP Window");
+                Console.WriteLine(ev.currentTarget.uid);
                 if (ClickedOnControl != null)
                 {
-                    ev.stopPropagation();
+                    Console.WriteLine("Clicked On UID: " + ClickedOnControl.Element.uid);
+                    Console.WriteLine("Clicked On Type: " + ClickedOnControl.GetType());
 
-                    ClickedOnControl.OnMouseUp(MouseEventArgs.CreateFromMouseEvent(ev, ClickedOnControl));
+                    ev.stopImmediatePropagation();
+
+                    Console.WriteLine("1");
+                    var evm = MouseEventArgs.CreateFromMouseEvent(ev, ClickedOnControl, true);
+
+                    ClickedOnControl.OnMouseUp(evm);
+
+                    if (ClickedOnControl is Form)
+                        (ClickedOnControl as Form).OnMouseUp(evm);
 
                     ClickedOnControl = null;
                 }
@@ -565,6 +576,7 @@ namespace System.Windows.Forms
 
         protected virtual void OnMouseUp(MouseEventArgs e)
         {
+            Console.WriteLine("2");
             if (MouseUp != null)
                 MouseUp(this, e);
         }

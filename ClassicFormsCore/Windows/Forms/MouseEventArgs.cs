@@ -82,12 +82,14 @@ namespace System.Windows.Forms
             return new PointF(x, y);
         }
 
-        public static MouseEventArgs CreateFromMouseEvent(MouseEvent original, Control target)
-        {
+        public static MouseEventArgs CreateFromMouseEvent(MouseEvent original, Control target, bool isMouseUp = false)
+        {            
             // what we need to do is get the local x, y off from the target.            
             Point mousePoint;
+            if (isMouseUp)
+                Console.WriteLine("In Create From Mouse Event");
 
-            if(!IsFF && original.currentTarget == target.Element)
+            if(!IsFF && original.currentTarget.uid == target.Element.uid)
             {
                 if(IsIE || IsEdge)                  // Browser.IsIE ||   
                 {
@@ -97,10 +99,15 @@ namespace System.Windows.Forms
                 else
                 {
                     mousePoint = new Point((int)original.layerX, (int)original.layerY);
-                }                
+                }
+                if (isMouseUp)
+                    Console.WriteLine("Target Match");
             }
             else
-            {                
+            {
+                if (isMouseUp)
+                    Console.WriteLine("Target Did not Match");
+
                 if (IsFF)
                 {
                     var vect = GetClientMouseLocation(original);

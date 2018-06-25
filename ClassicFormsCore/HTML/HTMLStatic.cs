@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Blazor.Browser.Interop;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -54,28 +52,24 @@ namespace ClassicFormsCore.HTML
                 MouseEvent mev = null;
                 try
                 {
-                    JObject obj = (JObject)JsonConvert.DeserializeObject(ev);
+                    var args = ev.Split('\n');
+                    // Console.WriteLine(obj.GetType());
+                    //  Console.WriteLine(JsonConvert.SerializeObject(obj));
 
-                   // Console.WriteLine(obj.GetType());
-                  //  Console.WriteLine(JsonConvert.SerializeObject(obj));
+                    //var data = ev.x + '\n' + ev.y + '\n' + ev.clientX + '\n' + ev.clientY + '\n' + ev.layerX + '\n' + ev.layerY + '\n' + ev.currentTarget.gui + '\n' + ev.button;
 
                     mev = new MouseEvent()
                     {
-                        clientX = (double)obj["clientX"]
-                      //  }
+                        x = Convert.ToDouble(args[0]),
+                        y = Convert.ToDouble(args[1]),
+                        clientX = Convert.ToDouble(args[2]),
+                        clientY = Convert.ToDouble(args[3]),
+                        layerX = Convert.ToDouble(args[4]),
+                        layerY = Convert.ToDouble(args[5]),
+                        currentTarget = new HTMLElement() { uid = args[6]  },
+                        button = Convert.ToDouble(args[7]),
+                        uid = args[8]
                     };
-
-                //clientY = obj["clientY"].Value<double>(),
-                //        x = obj["x"].Value<double>(),
-                //        y = obj["y"].Value<double>(),
-                //        layerX = obj["layerX"].Value<double>(),
-                //        layerY = obj["layerY"].Value<double>(),
-                //        button = obj["button"].Value<double>(),
-                //        currentTarget = new HTMLElement()
-                //        {
-                //            uid = obj["currentTarget"].Value<string>()
-
-                    Console.WriteLine(JsonConvert.SerializeObject(mev));
                 }
                 catch (Exception)
                 {

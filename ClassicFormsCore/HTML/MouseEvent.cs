@@ -15,24 +15,6 @@ namespace ClassicFormsCore.HTML
         public double clientX;
         public double clientY;
 
-        public HTMLElement currentTarget;
-
-        public double button;
-    }
-
-    public class MouseEventJson
-    {
-        public double x;
-        public double y;
-
-        public double layerX;
-        public double layerY;
-
-        public double clientX;
-        public double clientY;
-
-        public string currentTarget;
-
         public double button;
     }
 }

@@ -180,7 +180,7 @@ RegisteredFunction.Invoke<string>("element_get", uid, nameof(id));
 
         public T As<T>() where T : HTMLElement
         {
-            return this as T;
+            return (T)this;
         }
 
 
