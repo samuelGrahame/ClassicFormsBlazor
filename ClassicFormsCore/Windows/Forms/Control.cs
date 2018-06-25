@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms.Layout;
 using ClassicFormsCore.HTML;
@@ -462,13 +463,17 @@ namespace System.Windows.Forms
 
                     Console.WriteLine("1");
                     var evm = MouseEventArgs.CreateFromMouseEvent(ev, ClickedOnControl, true);
-
-                    ClickedOnControl.OnMouseUp(evm);
-
-                    if (ClickedOnControl is Form)
-                        (ClickedOnControl as Form).OnMouseUp(evm);
-
+                    var x = new Thread(() => {
+                        ClickedOnControl.OnMouseUp(evm);
+                    });
+                    x.Start();
                     ClickedOnControl = null;
+
+
+                    //if (ClickedOnControl is Form)
+                    //    (ClickedOnControl as Form).OnMouseUp(evm);
+
+                    //ClickedOnControl = null;
                 }
             };
 
