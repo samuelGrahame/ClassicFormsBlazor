@@ -463,12 +463,9 @@ namespace System.Windows.Forms
 
                     Console.WriteLine("1");
                     var evm = MouseEventArgs.CreateFromMouseEvent(ev, ClickedOnControl, true);
-                    var x = new Thread(() => {
-                        ClickedOnControl.OnMouseUp(evm);
-                    });
-                    x.Start();
+                    ClickedOnControl.OnMouseUp(evm);
                     ClickedOnControl = null;
-
+                    Console.WriteLine("5");
 
                     //if (ClickedOnControl is Form)
                     //    (ClickedOnControl as Form).OnMouseUp(evm);

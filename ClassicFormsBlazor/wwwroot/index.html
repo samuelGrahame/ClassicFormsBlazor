@@ -68,8 +68,10 @@
             //        x: ev.x, y: ev.y, clientX: ev.clientX, clientY: ev.clientY, layerX: ev.layerX, layerY: ev.layerY, currentTarget: ev.currentTarget.gui,
             //        button: ev.button
             //    })
-
-            Blazor.platform.callMethod(methodTypeInfo, null, [Blazor.platform.toDotNetString(uid), Blazor.platform.toDotNetString(data)]);
+            setTimeout(() => {
+                Blazor.platform.callMethod(methodTypeInfo, null, [Blazor.platform.toDotNetString(uid), Blazor.platform.toDotNetString(data)]);
+            }, 1);
+            
 
             //delete guidArray[eventuid];
             //if (uuiToDelete != null) {
@@ -159,14 +161,18 @@
             };
         });
         Blazor.registerFunction('onmousemove', (instance, value) => {
-            return guidArray[instance].onmousemove = (ev) => {
+            guidArray[instance].addEventListener('mousemove', (ev) => {
                 CallMouseEvent(value, ev);
-            };
+            });            
         });   
         Blazor.registerFunction('onmouseup', (instance, value) => {
-            return guidArray[instance].onmouseup = (ev) => {
+            guidArray[instance].addEventListener('mouseup', (ev) => {
                 CallMouseEvent(value, ev);
-            };
+            });
+
+            //return guidArray[instance].onmouseup = (ev) => {
+            //    CallMouseEvent(value, ev);
+            //};
         });  
         Blazor.registerFunction('getAttribute', (instance, name) => {
             return guidArray[instance].getAttribute(name);
