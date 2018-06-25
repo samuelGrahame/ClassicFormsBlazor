@@ -444,7 +444,7 @@ namespace System.Windows.Forms
             {
                 if (ClickedOnControl != null)
                 {
-                    ev.stopImmediatePropagation();
+                    ev.stopPropagation();
 
                     ClickedOnControl.OnMouseMove(MouseEventArgs.CreateFromMouseEvent(ev, ClickedOnControl));
                 }
@@ -459,11 +459,19 @@ namespace System.Windows.Forms
                     Console.WriteLine("Clicked On UID: " + ClickedOnControl.Element.uid);
                     Console.WriteLine("Clicked On Type: " + ClickedOnControl.GetType());
 
-                    ev.stopImmediatePropagation();
+                    ev.stopPropagation();
 
                     Console.WriteLine("1");
                     var evm = MouseEventArgs.CreateFromMouseEvent(ev, ClickedOnControl, true);
-                    ClickedOnControl.OnMouseUp(evm);
+                    try
+                    {
+                        ClickedOnControl.OnMouseUp(evm);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                    }
+                    
                     ClickedOnControl = null;
                     Console.WriteLine("5");
 

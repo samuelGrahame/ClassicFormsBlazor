@@ -12,15 +12,15 @@ namespace ClassicFormsCore.HTML
 
         public void stopPropagation()
         {
-            RegisteredFunction.Invoke<string>("element_call", uid, nameof(stopPropagation));
+            RegisteredFunction.Invoke<object>("stopPropagation", uid);
         }
-        public void stopImmediatePropagation()
-        {
-            RegisteredFunction.Invoke<string>("element_call", uid, nameof(stopImmediatePropagation));
-        }
+        //public void stopImmediatePropagation()
+        //{
+        //    RegisteredFunction.Invoke<string>("element_call", uid, nameof(stopImmediatePropagation));
+        //}
         public void preventDefault()
         {
-            RegisteredFunction.Invoke<string>("element_call", uid, nameof(preventDefault));
+            RegisteredFunction.Invoke<object>("element_call", uid, nameof(preventDefault));
         }
 
 
