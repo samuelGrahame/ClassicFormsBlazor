@@ -11,7 +11,8 @@
         const assemblyName = 'ClassicFormsBlazor';
         const namespace = 'Retyped';
         const typeName = 'dom';
-        function CallEvent(uid) {           
+
+        function CallEvent(uid, ev) {           
             var methodName = 'InvokeEvent';
 
             const methodTypeInfo = Blazor.platform.findMethod(
@@ -20,7 +21,13 @@
                 typeName,
                 methodName
             );
-            Blazor.platform.callMethod(methodTypeInfo, null, [Blazor.platform.toDotNetString(uid)]);
+
+            var eventuid = createGUID();
+            guidArray[eventuid] = ev;
+
+            Blazor.platform.callMethod(methodTypeInfo, null, [Blazor.platform.toDotNetString(uid), Blazor.platform.toDotNetString(eventuid)]);
+
+            delete guidArray[eventuid];
         }
 
         function CallMouseEvent(uid, ev) {                 
@@ -106,18 +113,18 @@
             };
         });
         Blazor.registerFunction('onchange', (instance, value) => {
-            return guidArray[instance].onchange = () => {
-                CallEvent(value);
+            return guidArray[instance].onchange = (ev) => {
+                CallEvent(value, ev);
             };
         });
         Blazor.registerFunction('onresize', (instance, value) => {
-            return guidArray[instance].onresize = () => {
-                CallEvent(value);
+            return guidArray[instance].onresize = (ev) => {
+                CallEvent(value, ev);
             };
         });
         Blazor.registerFunction('onpaste', (instance, value) => {
-            return guidArray[instance].onpaste = () => {
-                CallEvent(value);
+            return guidArray[instance].onpaste = (ev) => {
+                CallEvent(value, ev);
             };
         });
         Blazor.registerFunction('onmouseenter', (instance, value) => {
@@ -131,28 +138,28 @@
             };
         });
         Blazor.registerFunction('onkeydown', (instance, value) => {
-            return guidArray[instance].onkeydown = () => {
-                CallEvent(value);
+            return guidArray[instance].onkeydown = (ev) => {
+                CallEvent(value, ev);
             };
         });
         Blazor.registerFunction('onkeyup', (instance, value) => {
-            return guidArray[instance].onkeyup = () => {
-                CallEvent(value);
+            return guidArray[instance].onkeyup = (ev) => {
+                CallEvent(value, ev);
             };
         });
         Blazor.registerFunction('onblur', (instance, value) => {
-            return guidArray[instance].onblur = () => {
-                CallEvent(value);
+            return guidArray[instance].onblur = (ev) => {
+                CallEvent(value, ev);
             };
         });
         Blazor.registerFunction('onclick', (instance, value) => {
-            return guidArray[instance].onclick = () => {
-                CallEvent(value);
+            return guidArray[instance].onclick = (ev) => {
+                CallEvent(value, ev);
             };
         });
         Blazor.registerFunction('ondblclick', (instance, value) => {
-            return guidArray[instance].ondblclick = () => {
-                CallMouseEvent(value);
+            return guidArray[instance].ondblclick = (ev) => {
+                CallMouseEvent(value, ev);
             };
         });
         Blazor.registerFunction('onmousemove', (instance, value) => {

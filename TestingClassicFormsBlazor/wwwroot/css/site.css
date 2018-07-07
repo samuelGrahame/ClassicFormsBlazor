@@ -1,6 +1,4 @@
-﻿<style >
-
-div[scope=form-close]:before {
+﻿div[scope=form-close]:before {
     content: '\2A09';
 }
 
@@ -46,5 +44,3 @@ div[scope=form-max]:hover {
     box-shadow: 0px 1px 14px -2px rgba(0,0,0,0.33);
     border-color: rgb(128, 128, 128);
 }
-
-</style >
