@@ -44,7 +44,7 @@
         function CallMouseEvent(uid, ev) {                 
             var methodName = 'InvokeMouseEvent';
 
-            var methodTypeInfo = Blazor.platform.findMethod(
+            const methodTypeInfo2 = Blazor.platform.findMethod(
                 assemblyName,
                 namespace,
                 typeName,
@@ -68,23 +68,30 @@
             //        x: ev.x, y: ev.y, clientX: ev.clientX, clientY: ev.clientY, layerX: ev.layerX, layerY: ev.layerY, currentTarget: ev.currentTarget.gui,
             //        button: ev.button
             //    })
-            setTimeout(() => {
-                Blazor.platform.callMethod(methodTypeInfo, null, [Blazor.platform.toDotNetString(uid), Blazor.platform.toDotNetString(data)]);
-            }, 1);
+            try {
+                Blazor.platform.callMethod(methodTypeInfo2, null, [Blazor.platform.toDotNetString(uid), Blazor.platform.toDotNetString(data)]);
+            } catch (e) {
+                console.log(e);
+            }            
             
-
-            //delete guidArray[eventuid];
-            //if (uuiToDelete != null) {
-            //    delete guidArray[uuiToDelete];
-            //}
+            delete guidArray[eventuid];
+            if (uuiToDelete != null) {
+                delete guidArray[uuiToDelete];
+            }
         }
 
         var documentGUI = createGUID();
         guidArray[documentGUI] = document;
+        document.gui = bodyGUI;
+
         var bodyGUI = createGUID();
         guidArray[bodyGUI] = document.body;
+        document.body.gui = bodyGUI;
+
         var windowGUI = createGUID();
         guidArray[windowGUI] = window;
+        window.gui = windowGUI;
+
         var windowNavgatorGUI = createGUID();
         guidArray[windowNavgatorGUI] = window.navigator;
 
@@ -162,6 +169,9 @@
         });
         Blazor.registerFunction('onmousemove', (instance, value) => {
             guidArray[instance].addEventListener('mousemove', (ev) => {
+                if (instance == windowGUI) {
+                    console.log('Window Mouse Move');
+                }
                 CallMouseEvent(value, ev);
             });            
         });   
@@ -290,6 +300,39 @@
 
         Blazor.registerFunction('element_call_ret', (instance, method) => {
             return guidArray[instance][method]();
+        });
+
+        Blazor.registerFunction('getBoundingClientRect', (instance) => {
+            var rect = guidArray[instance].getBoundingClientRect();
+            
+            return rect.left + ',' + rect.top + ',' + rect.right + ',' + rect.bottom + ',' +
+                rect.x + ',' + rect.y + ',' + rect.width + ',' + rect.height;
+        });
+
+        Blazor.registerFunction('getOffsetPoint', (instance, IsFF) => {
+            var top = 0;
+            var left = 0;
+            var element = guidArray[instance];
+
+            do {
+                var dym = element;
+                if (IsFF) {
+                    var rec = element.getBoundingClientRect();
+                    top += rec.top;
+                    left += rec.left;
+        
+                    element = element.parentElement;
+                }
+                else {
+                    top += dym.offsetTop;
+                    left += dym.offsetLeft;
+                    element = dym.offsetParent;
+                }
+
+
+            } while (element != null);
+
+            return left + ',' + top;
         });
 
         Blazor.registerFunction('innerHTML_set', (instance, innerHTML) => {

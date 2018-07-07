@@ -445,35 +445,35 @@ namespace System.Windows.Forms
                 if (ClickedOnControl != null)
                 {
                     ev.stopPropagation();
+                    var evm = MouseEventArgs.CreateFromMouseEvent(ev, ClickedOnControl);
 
-                    ClickedOnControl.OnMouseMove(MouseEventArgs.CreateFromMouseEvent(ev, ClickedOnControl));
+                    if (ClickedOnControl is Form)
+                    {
+                        var frm = (Form)ClickedOnControl;
+                        frm.OnMouseMove(evm);
+                    }
+                    else
+                    {
+                        ClickedOnControl.OnMouseMove(evm);
+                    }
                 }
             };
 
             window.onmouseup = (ev) =>
             {
-                Console.WriteLine("On Mouse UP Window");
-                Console.WriteLine(ev.currentTarget.uid);
                 if (ClickedOnControl != null)
                 {
-                    Console.WriteLine("Clicked On UID: " + ClickedOnControl.Element.uid);
-                    Console.WriteLine("Clicked On Type: " + ClickedOnControl.GetType());
-
                     ev.stopPropagation();
-
-                    Console.WriteLine("1");
-                    var evm = MouseEventArgs.CreateFromMouseEvent(ev, ClickedOnControl, true);
+                    var evm = MouseEventArgs.CreateFromMouseEvent(ev, ClickedOnControl);
                     try
                     {
                         ClickedOnControl.OnMouseUp(evm);
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.ToString());
                     }
                     
                     ClickedOnControl = null;
-                    Console.WriteLine("5");
 
                     //if (ClickedOnControl is Form)
                     //    (ClickedOnControl as Form).OnMouseUp(evm);
@@ -586,7 +586,6 @@ namespace System.Windows.Forms
 
         protected virtual void OnMouseUp(MouseEventArgs e)
         {
-            Console.WriteLine("2");
             if (MouseUp != null)
                 MouseUp(this, e);
         }

@@ -1,4 +1,5 @@
 ﻿using ClassicFormsCore.HTML;
+using Microsoft.AspNetCore.Blazor.Browser.Interop;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -20,37 +21,38 @@ namespace System.Windows.Forms
 
         private static Point GetOffsetPoint(HTMLElement element)
         {
+#if !BRIDGE
+            var rev = RegisteredFunction.Invoke<string>("getOffsetPoint", element.uid, IsFF).Split(',');
+            return new Point(Convert.ToInt32(rev[0]), Convert.ToInt32(rev[1]));
+#else
             double top = 0;
             double left = 0;
 
             do
             {
-                var rec = element.getBoundingClientRect();
-                top += rec.top;
-                left += rec.left;
-                //element = dym.offsetParent;
-                element = element.parentElement;
-                //dynamic dym = element;
-                //if(IsFF)
-                //{
-                //    var rec = element.getBoundingClientRect();
-                //    top += rec.top;
-                //    left += rec.left;
-                //    //element = dym.offsetParent;
-                //    element = element.parentElement;
-                //}
-                //else
-                //{
-                //    top += dym.offsetTop;
-                //    left += dym.offsetLeft;
-                //    element = dym.offsetParent;
-                //}
+                dynamic dym = element;
+                if(Settings.IsFF)
+                {
+                    var rec = element.getBoundingClientRect().As<ClientRect>();
+                    top += rec.top;
+                    left += rec.left;
+                    //element = dym.offsetParent;
+                    element = element.parentElement;
+                }
+                else
+                {
+                    top += dym.offsetTop;
+                    left += dym.offsetLeft;
+                    element = dym.offsetParent;
+                }
                 
 
             } while (element != null);
 
             return new Point((int)left, (int)top);
+#endif
         }
+
         static bool IsEdge;
         static bool IsFF;
         static bool IsIE;
@@ -82,13 +84,11 @@ namespace System.Windows.Forms
             return new PointF(x, y);
         }
 
-        public static MouseEventArgs CreateFromMouseEvent(MouseEvent original, Control target, bool isMouseUp = false)
+        public static MouseEventArgs CreateFromMouseEvent(MouseEvent original, Control target)
         {            
             // what we need to do is get the local x, y off from the target.            
             Point mousePoint;
-            if (isMouseUp)
-                Console.WriteLine("In Create From Mouse Event");
-
+        
             if(!IsFF && original.currentTarget.uid == target.Element.uid)
             {
                 if(IsIE || IsEdge)                  // Browser.IsIE ||   
@@ -100,14 +100,9 @@ namespace System.Windows.Forms
                 {
                     mousePoint = new Point((int)original.layerX, (int)original.layerY);
                 }
-                if (isMouseUp)
-                    Console.WriteLine("Target Match");
             }
             else
-            {
-                if (isMouseUp)
-                    Console.WriteLine("Target Did not Match");
-
+            {               
                 if (IsFF)
                 {
                     var vect = GetClientMouseLocation(original);
@@ -122,14 +117,23 @@ namespace System.Windows.Forms
             }
 
             var button = (int)original.button;
-            return new MouseEventArgs(
-                button == 1 ? MouseButtons.Left :
-                button == 2 ? MouseButtons.Right :
-                button == 4 ? MouseButtons.Middle :
-                button == 8 ? MouseButtons.XButton2 :
-                MouseButtons.XButton2,
-                1, mousePoint.X, mousePoint.Y, 0)
-            { Original = original };            
+            MouseButtons mb;
+
+            if (button == 1)
+                mb = MouseButtons.Left;
+            else if (button == 2)
+                mb = MouseButtons.Right;
+            else if (button == 4)
+                mb = MouseButtons.Middle;
+            else if (button == 8)
+                mb = MouseButtons.XButton1;
+            else
+                mb = MouseButtons.XButton2;
+
+            var returnMouseEvent = new MouseEventArgs(mb, 1, mousePoint.X, mousePoint.Y, 0);
+            returnMouseEvent.Original = original;
+            
+            return returnMouseEvent;
         }
 
         //

@@ -692,7 +692,6 @@ namespace System.Windows.Forms
             ActiveForm = this;
             // work out area... of click.
             //document.body.style.userSelect = null;
-            Console.WriteLine("Mouse Down");
             _formMovementModes = GetMovementMode(e);
 
             if ((_mouseDownOnBorder = (_formMovementModes != FormMovementModes.None)))
@@ -711,13 +710,10 @@ namespace System.Windows.Forms
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            Console.WriteLine("4");
             //document.body.style.userSelect = null;
             _mouseDownOnBorder = false;
 
             document.body.style.cursor = null;
-
-            Console.WriteLine("Mouse Up");
 
             base.OnMouseUp(e);
         }
@@ -727,7 +723,6 @@ namespace System.Windows.Forms
             // is mouse down???
             if(_mouseDownOnBorder)
             {
-                Console.WriteLine("Moved Down");
                 var prev = Location;
                 var newY = (Location.Y + e.Y) + _prevY;
                 var newX = (Location.X + e.X) + _prevX;
@@ -779,7 +774,6 @@ namespace System.Windows.Forms
             }
             else
             {
-                Console.WriteLine("Moved Not Down");
                 GetMovementMode(e);
             }
             base.OnMouseMove(e);

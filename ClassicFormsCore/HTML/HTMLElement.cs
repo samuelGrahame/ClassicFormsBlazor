@@ -126,8 +126,18 @@ namespace ClassicFormsCore.HTML
         //innerText
         public HTMLElement parentElement
         {
-            get =>
-                RegisteredFunction.Invoke<HTMLElement>("element_parentElement_get", uid);
+            get
+            {
+                var ruid = RegisteredFunction.Invoke<string>("element_parentElement_get", uid);
+                if(string.IsNullOrWhiteSpace(ruid))
+                {
+                    return null;
+                }
+                else
+                {
+                    return new HTMLElement() { uid = ruid };
+                }
+            }                 
             set =>
                 RegisteredFunction.Invoke<string>("element_parentElement_set", uid, value);
         }
@@ -205,7 +215,19 @@ RegisteredFunction.Invoke<string>("element_get", uid, nameof(className));
 
         public DomRect getBoundingClientRect()
         {
-            return RegisteredFunction.Invoke<DomRect>("getBoundingClientRect", uid, nameof(getBoundingClientRect));
+            var domRect = RegisteredFunction.Invoke<string>("getBoundingClientRect", uid).Split(',');
+            var domRectR = new DomRect();
+            domRectR.left = Convert.ToDouble(domRect[0]);
+            domRectR.top = Convert.ToDouble(domRect[1]);
+            domRectR.right = Convert.ToDouble(domRect[2]);
+            domRectR.bottom = Convert.ToDouble(domRect[3]);
+
+            domRectR.x = Convert.ToDouble(domRect[4]);
+            domRectR.y = Convert.ToDouble(domRect[5]);
+            domRectR.width = Convert.ToDouble(domRect[6]);
+            domRectR.height = Convert.ToDouble(domRect[7]);
+            
+            return domRectR;
         }
 
         public void focus()

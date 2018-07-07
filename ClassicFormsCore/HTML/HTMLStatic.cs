@@ -48,16 +48,11 @@ namespace ClassicFormsCore.HTML
         {
             try
             {
-                //Console.WriteLine(ev);
                 MouseEvent mev = null;
                 try
                 {
                     var args = ev.Split('\n');
-                    // Console.WriteLine(obj.GetType());
-                    //  Console.WriteLine(JsonConvert.SerializeObject(obj));
-
-                    //var data = ev.x + '\n' + ev.y + '\n' + ev.clientX + '\n' + ev.clientY + '\n' + ev.layerX + '\n' + ev.layerY + '\n' + ev.currentTarget.gui + '\n' + ev.button;
-
+                   
                     mev = new MouseEvent()
                     {
                         x = Convert.ToDouble(args[0]),
