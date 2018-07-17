@@ -17,20 +17,9 @@ namespace TestApplication
             InitializeComponent();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button8_Click(object sender, EventArgs e)
         {
-            textBox1.Text = "Hello World";
-            // need to invoke change...
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            textBox2.Text = textBox1.Text;
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
+            MessageBox.Show($"This button is anchored with: {(sender as Button)?.Text}");
         }
     }
 }

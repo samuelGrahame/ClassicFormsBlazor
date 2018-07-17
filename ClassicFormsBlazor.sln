@@ -5,7 +5,10 @@ VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApplication", "TestApplication\TestApplication.csproj", "{F5810C66-C8FB-4D65-8853-784A1DECE714}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingClassicFormsBlazor", "TestingClassicFormsBlazor\TestingClassicFormsBlazor.csproj", "{164F1488-44DF-4F03-91B8-F37B431C1A0A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestingClassicFormsBlazor", "TestingClassicFormsBlazor\TestingClassicFormsBlazor.csproj", "{164F1488-44DF-4F03-91B8-F37B431C1A0A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F5810C66-C8FB-4D65-8853-784A1DECE714} = {F5810C66-C8FB-4D65-8853-784A1DECE714}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
