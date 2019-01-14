@@ -8,8 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\TestApplication\Form1.cs" Link="UI\Form1.cs" />
-    <Compile Include="..\TestApplication\Form1.Designer.cs" Link="UI\Form1.Designer.cs" />
+    <Compile Include="..\TestApplication\Examples\frmCalculator.cs" Link="UI\Example\frmCalculator.cs" />
+    <Compile Include="..\TestApplication\Examples\frmCalculator.Designer.cs" Link="UI\Example\frmCalculator.Designer.cs" />
+    <Compile Include="..\TestApplication\frmAnchorTest.cs" Link="UI\frmAnchorTest.cs" />
+    <Compile Include="..\TestApplication\frmDockingTest.cs" Link="UI\frmDockingTest.cs" />
+    <Compile Include="..\TestApplication\frmDockingTest.Designer.cs" Link="UI\frmDockingTest.Designer.cs" />
+    <Compile Include="..\TestApplication\frmModal.cs" Link="UI\frmModal.cs" />
+    <Compile Include="..\TestApplication\frmModal.Designer.cs" Link="UI\frmModal.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,8 +25,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="UI\" />
     <Folder Include="Pages\" />
+    <Folder Include="UI\Example\" />
     <Folder Include="wwwroot\script\" />
   </ItemGroup>
 
